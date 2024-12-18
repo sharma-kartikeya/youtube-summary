@@ -1,0 +1,31 @@
+{
+    "name": "Youtube Summary Creator",
+    "description": "It is chrome extension to create summary of youtube comments",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "icons": {
+        "16": "./js/statics/icon-16.png",
+        "32": "./js/statics/icon-32.png",
+        "128": "./js/statics/icon-128.png"
+    },
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "action": {
+        "default_popup": "js/index.html",
+        "default_title": "Youtube Summary Extension",
+        "default_icon": {
+            "16": "./js/statics/icon-16.png",
+            "32": "./js/statics/icon-32.png",
+            "128": "./js/statics/icon-128.png"
+        }
+    },
+    "host_permissions": [
+        "https://www.youtube.com/*"
+    ],
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting"
+    ]
+}
