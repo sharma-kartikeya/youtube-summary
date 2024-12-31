@@ -23,7 +23,6 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                exclude: /node_modules/,
                 test: /\.css$/i,
                 use: [
                     "style-loader",
@@ -55,6 +54,15 @@ module.exports = {
     output: {
         path: path.join(__dirname, "dist/js"),
         filename: "[name].js",
+    },
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, 'dist'), // Serve static files from "dist"
+        },
+        port: 3000, // Specify a port
+        open: true, // Automatically open the browser
+        hot: true, // Enable Hot Module Replacement
+        historyApiFallback: true, // Serve index.html for SPA routes
     },
 };
 

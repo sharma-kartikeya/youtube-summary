@@ -1,14 +1,27 @@
 {
-    "compilerOptions": {
-      "target": "es6",                        // Target ECMAScript version
-      "module": "esnext",                     // Module system for React
-      "lib": ["dom", "dom.iterable", "esnext"], // Use browser and modern JS features
-      "jsx": "react",                         // Support React JSX syntax
-      "strict": true,                         // Enable strict type-checking
-      "esModuleInterop": true,                // Allow default imports
-      "skipLibCheck": true,                   // Skip type checks on libraries
-      "forceConsistentCasingInFileNames": true // Ensure consistent casing in imports
-    },
-    "include": ["src", "background.js"],                       // Include all files in the src directory
-    "exclude": ["node_modules"]               // Exclude node_modules
-  }
+  "compilerOptions": {
+    "target": "es6", // Target ECMAScript version
+    "module": "esnext", // Module system for React
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ], // Use browser and modern JS features
+    "jsx": "react", // Support React JSX syntax
+    "strict": true, // Enable strict type-checking
+    "esModuleInterop": true, // Allow default imports
+    "skipLibCheck": true, // Skip type checks on libraries
+    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in imports
+    // "paths": {
+    //   "@reduxjs/toolkit": ["./node_modules/@reduxjs/toolkit"]
+    // },
+    "moduleResolution": "node"
+  },
+  "include": [
+    "src",
+    "background.js"
+  ], // Include all files in the src directory
+  "exclude": [
+    "node_modules"
+  ] // Exclude node_modules
+}

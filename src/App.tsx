@@ -1,43 +1,53 @@
 import React, { useEffect } from "react";
+import './App.css';
+import TextInput from "./components/text-input/TextInput";
+import { useDispatch, useSelector } from "react-redux";
+import { appendVideo, YoutubeStateSelector, YoutubeVideoData } from "./redux/slices/YoutubeSlice";
+import { AppDispatch, RootState } from "./redux/store";
+import ChatComponent from "./components/chat-component/ChatComponent";
 
 function App() {
-    console.log("ASAFSASDADSAFDSADS")
-    useEffect(() => {
-        console.log("use Effect Called!")
-        chrome.tabs.onActivated.addListener((activeInfo) => {
-            console.log("onActivated Called")
-            chrome.tabs.get(activeInfo.tabId, (tab) => {
-                if (tab.url?.startsWith("https://www.youtube.com/watch?v=")) {
-                    // const videoId = getYouTubeVideoId(tab.url);
-                    // fetchYouTubeComments(videoId).then((comments) => {
-                    //     console.log(comments)
-                    //     get_report(comments)
-                    // })
-                    console.log("youtube video page")
-                }
-            });
-        });
+    const youtubeState = useSelector<RootState, YoutubeVideoData>(YoutubeStateSelector);
+    const dispatcher = useDispatch<AppDispatch>();
 
-        chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-            console.log("OnUpdated Called")
-            if (changeInfo.status === 'complete' && tab.url) {
-                if (tab.url.startsWith("https://www.youtube.com/watch?v=")) {
-                    // const videoId = getYouTubeVideoId(tab.url);
-                    // fetchYouTubeComments(videoId).then((comments) => {
-                    //     console.log(comments)
-                    //     get_report(comments)
-                    // })
-                    console.log("youtube video page")
-                }
+    const getVideoId = (url: string): string | undefined => {
+        if (url.startsWith("https://www.youtube.com/watch?v=")) {
+            const urlObj = new URL(url);
+
+            // Check for standard YouTube URL
+            if (urlObj.searchParams.has("v")) {
+                return urlObj.searchParams.get("v") || undefined;
             }
-        });
-    }, [])
+        }
+    }
 
-    return (
-        <div className="App">
-            Hello World
-        </div>
-    );
+    return <div className="App">
+        {
+            youtubeState.status === 'idle' ? (
+                // <ChatComponent />
+                <div>
+                    <div className="header">Enter Youtube URL</div>
+                    <TextInput
+                        className="url-input"
+                        validationError="Please enter valid Youtube video url."
+                        validation={(value: string) => {
+                            const videoId = getVideoId(value);
+                            if (videoId) {
+                                dispatcher(appendVideo(videoId));
+                                return true;
+                            } else return false;
+                        }}
+                    />
+                </div>
+            ) : youtubeState.status === 'failed' ? (
+                <div className="App">{youtubeState.error}</div>
+            ) : youtubeState.status === 'loading' ? (
+                <div>Fetching Youtube Data.....</div>
+            ) : (
+                <ChatComponent />
+            )
+        }
+    </div>
 }
 
 export default App;

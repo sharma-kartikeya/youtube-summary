@@ -1,6 +1,21 @@
 .App {
     display: flex;
     justify-content: center;
-    width: 100vw;
-    height: 100vh;
+    flex-direction: column;
+    width: 784px;
+    /* background-color: black; */
+    gap: 12px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    font-weight: 600;
+    /* height: min-content; */
+    /* border: 2px solid red; */
+}
+
+.url-input {
+    width: 100%;
 }
